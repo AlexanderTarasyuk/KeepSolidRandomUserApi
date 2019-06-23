@@ -1,5 +1,6 @@
 package com.example.user.provectus.mvp.View;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,6 +79,12 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
         }
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        presenter.loadData();
+    }
+
     private void renderContacts() {
         Timber.d("start rendering");
         setContentView(R.layout.activity_user_list);
@@ -96,6 +103,8 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
 
         presenter.loadData();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

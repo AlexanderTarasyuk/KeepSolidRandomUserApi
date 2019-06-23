@@ -19,7 +19,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".mvp.View.UserListActivity"
-
+            android:screenOrientation="portrait"
             android:launchMode="singleTop"
             tools:ignore="InnerclassSeparator">
             <intent-filter>
