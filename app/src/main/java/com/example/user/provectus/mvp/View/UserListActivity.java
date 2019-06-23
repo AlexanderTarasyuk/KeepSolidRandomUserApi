@@ -62,7 +62,7 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
         linearLayoutManager = new LinearLayoutManager(this);
 
         DaggerUsersListPresenterImplComponent.builder().build().inject(this);
-//        presenter = new UsersListPresenterImpl();
+        DaggerUsersListPresenterImplComponent.builder().build().inject(presenter);
         presenter.attach(this);
         if (presenter.isNetworkConnection(this)) {
             if (savedInstanceState == null) {
@@ -218,7 +218,6 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
             refreshLayout.setRefreshing(false);
         });
     }
-
 
 
 }

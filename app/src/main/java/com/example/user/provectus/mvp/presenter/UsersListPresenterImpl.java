@@ -11,6 +11,8 @@ import com.example.user.provectus.mvp.View.UserListActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
@@ -18,14 +20,16 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class UsersListPresenterImpl implements UserListPresenter {
-    private NetworkModel networkModel;
-    private UserListContract contract;
+    @Inject
+    NetworkModel networkModel;
+
+    @Inject
+    UserListActivity contract;
 
     private Disposable usersDisposable = null;
 
     public UsersListPresenterImpl() {
 
-        networkModel = new NetworkModel();
     }
 
     @Override
@@ -52,7 +56,7 @@ public class UsersListPresenterImpl implements UserListPresenter {
 
     @Override
     public void attach(UserListContract userListActivity) {
-        contract = userListActivity;
+        contract = (UserListActivity) userListActivity;
     }
 
 
