@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,16 +34,18 @@ public class UserDetailsActivity extends AppCompatActivity {
     private static final int CALL_PERMISSION = 100;
     private UserItem userItem;
 
-    CircleImageView circleImageViewContactAvatar;
-    TextView textViewContactFullNAME;
-    TextView textViewContactAge;
+    private CircleImageView circleImageViewContactAvatar;
+    private TextView textViewContactFullNAME;
+    private TextView textViewContactAge;
 
-    AppCompatEditText appCompatEditTextContactPhone;
-    AppCompatEditText appCompatEditTextContactMail;
-    AppCompatEditText appCompatEditTextContactBirthday;
+    private AppCompatEditText appCompatEditTextContactPhone;
+    private AppCompatEditText appCompatEditTextContactMail;
+    private AppCompatEditText appCompatEditTextContactBirthday;
 
-    Button buttonCall;
-    Toolbar toolbar;
+    private Button buttonCall;
+    private Toolbar toolbar;
+
+    private Bundle bundle;
 
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
@@ -71,7 +74,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             appCompatEditTextContactBirthday.setText(new DateManager().getRightDate(userItem.dob.getDate()));
             appCompatEditTextContactPhone.setText(userItem.phone);
 
-           buttonCall.setOnClickListener(view -> callByNumber(userItem.phone));
+            buttonCall.setOnClickListener(view -> callByNumber(userItem.phone));
         }
     }
 
@@ -109,5 +112,34 @@ public class UserDetailsActivity extends AppCompatActivity {
         appCompatEditTextContactBirthday = findViewById(R.id.apc_user_birthday);
         buttonCall = findViewById(R.id.btn_call);
         toolbar = findViewById(R.id.toolbar);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        bundle.putParcelable(getString(R.string.save), userItem);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        userItem = savedInstanceState.getParcelable(getString(R.string.save));
+        if (userItem != null) {
+            Glide
+                    .with(this)
+                    .load(userItem.picture.large)
+                    .apply(Constants.GLIDE_OPTIONS)
+                    .into(circleImageViewContactAvatar);
+
+            textViewContactFullNAME.setText(userItem.name.first + " " + userItem.name.last);
+            textViewContactAge.setText(userItem.dob.getAge() + " years old");
+
+            appCompatEditTextContactMail.setText(userItem.email);
+            appCompatEditTextContactBirthday.setText(new DateManager().getRightDate(userItem.dob.getDate()));
+            appCompatEditTextContactPhone.setText(userItem.phone);
+
+            buttonCall.setOnClickListener(view -> callByNumber(userItem.phone));
+        }
     }
 }
