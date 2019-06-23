@@ -31,6 +31,9 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<UserItem> list;
 
+    public List<UserItem> getList() {
+        return list;
+    }
 
     public UserAdapter(int linkLayoutProgress, Context context, List<UserItem> list) {
         progressLayoutResId = linkLayoutProgress;
@@ -106,9 +109,10 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void addList(List<UserItem> newList) {
+    public List<UserItem> addList(List<UserItem> newList) {
         list.addAll(newList);
         notifyDataSetChanged();
+        return newList;
 
     }
 

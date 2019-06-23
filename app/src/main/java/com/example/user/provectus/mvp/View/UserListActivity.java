@@ -2,6 +2,7 @@ package com.example.user.provectus.mvp.View;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,7 +83,9 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        presenter.loadData();
+
+        adapter.notifyDataSetChanged();
+
     }
 
     private void renderContacts() {
@@ -103,7 +106,6 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
 
         presenter.loadData();
     }
-
 
 
     @Override
@@ -217,13 +219,6 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
         });
     }
 
-
-    @Override
-    protected void onStop() {
-        Timber.d("OnStop");
-        if (presenter != null) presenter.detach();
-        super.onStop();
-    }
 
 
 }
