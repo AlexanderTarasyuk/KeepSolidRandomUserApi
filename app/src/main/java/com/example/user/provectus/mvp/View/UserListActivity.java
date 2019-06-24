@@ -34,6 +34,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class UserListActivity extends AppCompatActivity implements UserListContract {
@@ -43,9 +45,9 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
     private UserAdapter adapter;
     private boolean isLoading = false;
 
-    private SwipeRefreshLayout refreshLayout;
-    public RecyclerView recyclerUsers;
-    public ProgressBar progressBar;
+    @BindView(R.id.swipe_layout) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.rv_list_users) RecyclerView recyclerUsers;
+    @BindView(R.id.pb_load_list) ProgressBar progressBar;
     private Menu menu;
 
     private GridLayoutManager gridLayoutManager;
@@ -91,13 +93,13 @@ public class UserListActivity extends AppCompatActivity implements UserListContr
     private void renderContacts() {
         Timber.d("start rendering");
         setContentView(R.layout.activity_user_list);
-        recyclerUsers = findViewById(R.id.rv_list_users);
-        progressBar = findViewById(R.id.pb_load_list);
-        refreshLayout = findViewById(R.id.swipe_layout);
+        ButterKnife.bind(this);
+//        recyclerUsers = findViewById(R.id.rv_list_users);
+//        progressBar = findViewById(R.id.pb_load_list);
+//        refreshLayout = findViewById(R.id.swipe_layout);
 
-//
+
         adapter = new UserAdapter(R.layout.item_load_more, this, new ArrayList<>());
-
         recyclerUsers.setLayoutManager(gridLayoutManager);
         recyclerUsers.setAdapter(adapter);
         setListeners();

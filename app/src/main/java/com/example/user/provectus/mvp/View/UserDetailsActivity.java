@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static java.util.Objects.*;
@@ -34,16 +36,14 @@ public class UserDetailsActivity extends AppCompatActivity {
     private static final int CALL_PERMISSION = 100;
     private UserItem userItem;
 
-    private CircleImageView circleImageViewContactAvatar;
-    private TextView textViewContactFullNAME;
-    private TextView textViewContactAge;
-
-    private AppCompatEditText appCompatEditTextContactPhone;
-    private AppCompatEditText appCompatEditTextContactMail;
-    private AppCompatEditText appCompatEditTextContactBirthday;
-
-    private Button buttonCall;
-    private Toolbar toolbar;
+    @BindView(R.id.cv_user_big_image) CircleImageView circleImageViewContactAvatar;
+    @BindView(R.id.tv_user_pib) TextView textViewContactFullNAME;
+    @BindView(R.id.tv_user_age) TextView textViewContactAge;
+    @BindView(R.id.apc_user_phone) AppCompatEditText appCompatEditTextContactPhone;
+    @BindView(R.id.apc_user_mail) AppCompatEditText appCompatEditTextContactMail;
+    @BindView(R.id.apc_user_birthday) AppCompatEditText appCompatEditTextContactBirthday;
+    @BindView(R.id.btn_call) Button buttonCall;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     private Bundle bundle;
 
@@ -52,8 +52,8 @@ public class UserDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
-
-        init_view();
+        ButterKnife.bind(this);
+//        init_view();
         setSupportActionBar(toolbar);
 
         requireNonNull(getSupportActionBar()).setTitle(R.string.user_info);
